@@ -1,3 +1,0 @@
-/home/frank/Documentos/ARQUIVOSFACUL/QUARTOPERIODO/AEDSII/LABAEDS/TRABALHOUM/CODE/build-debug/CMakeFiles/app.dir
-/home/frank/Documentos/ARQUIVOSFACUL/QUARTOPERIODO/AEDSII/LABAEDS/TRABALHOUM/CODE/build-debug/CMakeFiles/edit_cache.dir
-/home/frank/Documentos/ARQUIVOSFACUL/QUARTOPERIODO/AEDSII/LABAEDS/TRABALHOUM/CODE/build-debug/CMakeFiles/rebuild_cache.dir
