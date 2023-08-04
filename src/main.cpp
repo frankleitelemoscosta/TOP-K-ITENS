@@ -1,10 +1,12 @@
 #include<iostream>
+#include"Analysis.hpp"
 
 using namespace std;
 
 int main(){
 
-    cout<< "Hello word!" <<endl;
+    ExtractWords();
+
     return 0;
 
 }
