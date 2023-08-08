@@ -6,13 +6,14 @@
 #include <fstream>
 #include<map>
 #include"Hash.hpp"
+#include"Heap.hpp"
 
 using namespace std;
 
 wchar_t *getText(const locale &loc);
 void printStart(std::wofstream &output);
 std::wofstream createOutput(const std::locale &loc);
-void printEnd(std::wofstream &output,Map &mp);
+void printEnd(Vector *v);
 
 
 #endif

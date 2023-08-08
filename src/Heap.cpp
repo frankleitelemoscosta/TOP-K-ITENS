@@ -1,25 +1,30 @@
 #include "Heap.hpp"
 
-
 void Initialize(Vector *v){
 	
 	srand(42); 
     
-    v->itens = (int*)malloc(MAXSIZE*sizeof(int));
+    v->vet = (Itens*)malloc(MAXSIZE*sizeof(Itens));
 	for(int i=0; i<MAXSIZE; i++)
-		v->itens[i] = rand()%100;
+	{
+		v->vet[i].frequence = rand()%100;
+		v->vet[i].value = L"Vazio";
+	}	
 }
 
-void Swap(int *a, int *b){
-	int aux = *a;
+void Swap(Itens *a, Itens *b){
+	Itens aux = *a;
 	*a = *b;
 	*b = aux;
 }
 
-void Imprime(Vector *v, int right){
-	printf("RIGHT(%d)\t", right);
-	for(int i=0; i<MAXSIZE; i++)
-		printf("%d\t", v->itens[i]);
+void Imprime(Vector *v){
+		
+	for(int i=0; i<MAXSIZE; i++){
+		wcout << v->vet[i].value << "\t";	
+		printf("frequence: %d\t \n", v->vet[i].frequence);
+		}
+	
 	printf("\n");
 }
 
@@ -28,15 +33,17 @@ void RebuildHeap(Vector *v, int left){
 	int i = left;
 	int child = (left > 0)?(i*2):1;
 
-	if((child+1 < MAXSIZE) && (v->itens[child] < v->itens[child+1]))
+	if((child+1 < MAXSIZE) && (v->vet[child].frequence < v->vet[child+1].frequence))
 		child = child + 1;
-	if (v->itens[i] < v->itens[child])
-		Swap(&v->itens[i], &v->itens[child]);
+	if (v->vet[i].frequence < v->vet[child].frequence)
+		Swap(&v->vet[i], &v->vet[child]);
 	
 }
 
 void BuildHeap(Vector *v, int right){
+
 	int left = (right/2);
+	
 	while(left > 0){
 		left = left - 1; 
 		RebuildHeap(v, left);
@@ -51,8 +58,35 @@ void HeapSort(Vector *v){
 	while(right > 0){
 		right = right - 1;
 		BuildHeap(v, right);
-		Swap(&v->itens[left], &v->itens[right]);
-		Imprime(v, right);
+		Swap(&v->vet[left], &v->vet[right]);
 	}
 	
+}
+
+void FillingHeap(Map &mp,Vector *v)
+{
+	int Counter_Aux = 0;
+	bool key = false;
+
+
+	for(const auto &pair : mp.mp) {
+		if(Counter_Aux < 20)
+		{
+			v->vet[Counter_Aux].value = pair.first;
+			v->vet[Counter_Aux].frequence = pair.second.appearences;
+			Counter_Aux++;
+			if(Counter_Aux == 20){
+				HeapSort(v);
+				key = true;
+			}
+		}
+		else if(key == true){
+			if(v->vet[0].frequence < pair.second.appearences){
+				v->vet[0].frequence = pair.second.appearences;
+				v->vet[0].value = pair.first;
+				HeapSort(v);
+			}
+		}
+   }
+
 }

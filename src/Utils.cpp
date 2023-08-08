@@ -1,5 +1,6 @@
 #include"Utils.hpp"
 
+
 wchar_t *getText(const std::locale &loc)
 {
   wifstream txt("./dataset/input.data", ios::binary);
@@ -29,38 +30,10 @@ wchar_t *getText(const std::locale &loc)
   return buffer;
 }
 
-void printStart(std::wofstream &output)
+void printEnd( Vector *Heapp)
 {
-	output << L"======================================================================================================================================\n"
-					  L"=>                                                    ### START PROCESS ###\n"
-	          L"======================================================================================================================================\n"
-            L"\n"
-	          L"======================================================================================================================================\n"
-				    L"=>                                                    ### PARTIAL RESULT ###\n"
-	          L"======================================================================================================================================\n"
-            L"\n";
-}
 
-std::wofstream createOutput(const std::locale &loc)
-{
-  wofstream output("./dataset/output.data");
-
-  if(!output.is_open()) {
-    wcout << L"Não foi possível abrir o arquivo \"./dataset/output.data\"" << endl;
-    exit(1);
-  }
-
-  output.imbue(loc);
-
-  return output;
-}
-
-void printEnd(std::wofstream &output, Map &mp)
-{
-  output << L"======================================================================================================================================\n"
-  L"                                                    ### WORDS ###\n";
-
-   for(const auto &pair : mp.mp) {
-    output<< L"\t\t\t\t\t\t\t\t\t\t\t\t\t"<< L"Chave: " << pair.first << L" apareceu: " <<pair.second.appearences << endl;
+   for(int i = 0 ; i < 20 ; i++) {
+    wcout << "Chave: " << Heapp->vet[i].value << L" apareceu: " << Heapp->vet[i].frequence << endl;
    }
 }
