@@ -7,6 +7,7 @@
 #include"Heap.hpp"
 #include<vector>
 #include<map>
+#include"StopWords.hpp"
 
 using namespace std;
 
@@ -14,10 +15,12 @@ void ExtractWords(){
 
   setlocale(LC_ALL, "pt_BR.UTF-8");
   locale loc(locale(), new codecvt_utf8<wchar_t>);
+  setlocale(LC_ALL, "portuguese");
 
   wchar_t *txt = getText(loc), *ch = txt;
   wchar_t *ptr;
   wstring word;
+  StopWords stop_words(loc);
   Map mp;
   Vector Heapp;
 
@@ -25,14 +28,22 @@ void ExtractWords(){
     switch(*ch) {
       case L'.': case L'!': case L'?':
         if(!word.empty()) {
+          if(stop_words.isStopWord(word)) {
+            printf(" ");
+          } else {
             mp.addWord(word);
+          }
           }
           word.clear();
         break;
 
       case L'\n':
         if(!word.empty()) {
-            mp.addWord(word);
+            if(stop_words.isStopWord(word)) {
+            printf(" ");
+            } else {
+              mp.addWord(word);
+            }
           }
           word.clear();
         break;
@@ -41,8 +52,11 @@ void ExtractWords(){
       case L';': case L'(': case L')':
       case L'"': case L'-': case L'/':
         if(!word.empty()) {
-        
-          mp.addWord(word);
+          if(stop_words.isStopWord(word)) {
+            printf(" ");
+            } else {
+              mp.addWord(word);
+            }
 
           word.clear();
         }
