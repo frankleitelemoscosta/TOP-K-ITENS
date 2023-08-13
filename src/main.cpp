@@ -5,7 +5,7 @@ using namespace std;
 
 int main(){
 
-    ExtractWords();
+    Analysis();
 
     return 0;
 

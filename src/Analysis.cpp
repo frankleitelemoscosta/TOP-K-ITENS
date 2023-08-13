@@ -11,7 +11,7 @@
 
 using namespace std;
 
-void ExtractWords(){
+void Analysis(){
 
   setlocale(LC_ALL, "pt_BR.UTF-8");
   locale loc(locale(), new codecvt_utf8<wchar_t>);
@@ -29,7 +29,7 @@ void ExtractWords(){
       case L'.': case L'!': case L'?':
         if(!word.empty()) {
           if(stop_words.isStopWord(word)) {
-            printf(" ");
+              word.clear();
           } else {
             mp.addWord(word);
           }
@@ -40,7 +40,7 @@ void ExtractWords(){
       case L'\n':
         if(!word.empty()) {
             if(stop_words.isStopWord(word)) {
-            printf(" ");
+              word.clear();
             } else {
               mp.addWord(word);
             }
@@ -53,7 +53,7 @@ void ExtractWords(){
       case L'"': case L'-': case L'/':
         if(!word.empty()) {
           if(stop_words.isStopWord(word)) {
-            printf(" ");
+              word.clear();
             } else {
               mp.addWord(word);
             }
