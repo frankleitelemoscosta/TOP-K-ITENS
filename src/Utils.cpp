@@ -1,12 +1,21 @@
 #include"Utils.hpp"
 
 
-wchar_t *getText(const std::locale &loc)
+wchar_t *getText(const std::locale &loc,int counter)
 {
-  wifstream txt("./dataset/input.data", ios::binary);
+
+  string number;
+  string name = "./dataset/txt0";
+  
+  number = to_string(counter);
+
+  name = name + number;
+  name = name + ".txt";
+
+  wifstream txt(name, ios::binary);
 
   if(!txt.is_open()) {
-    wcout << L"Não foi possível abrir o arquivo \"./dataset/input.data\"" << endl;
+    wcout << L"Não foi possível abrir o arquivo" << endl;
     exit(1);
   }
 
@@ -32,8 +41,7 @@ wchar_t *getText(const std::locale &loc)
 
 void printEnd( Vector *Heapp)
 {
-
-   for(int i = 0 ; i < 20 ; i++) {
-    wcout << "Chave: " << Heapp->vet[i].value << L" apareceu: " << Heapp->vet[i].frequence << endl;
+   for(int i = 0 ; i < MAXSIZE ; i++) {
+    wcout << "Chave: " << Heapp->vet[i].value << L" frequência: " << Heapp->vet[i].frequence << endl;
    }
 }

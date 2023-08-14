@@ -52,11 +52,11 @@ void BuildHeap(Vector *v, int right){
 
 
 void HeapSort(Vector *v){
-	int left = 0;
+	int left = 0;//this is the index of the houses the vector into v.
 	int right = MAXSIZE;
 
 	while(right > 0){
-		right = right - 1;
+		right = right - 1;//this is define the walking per tree heap.
 		BuildHeap(v, right);
 		Swap(&v->vet[left], &v->vet[right]);
 	}

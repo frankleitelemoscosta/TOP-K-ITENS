@@ -15,9 +15,9 @@ void Analysis(){
 
   setlocale(LC_ALL, "pt_BR.UTF-8");
   locale loc(locale(), new codecvt_utf8<wchar_t>);
-  setlocale(LC_ALL, "portuguese");
 
-  wchar_t *txt = getText(loc), *ch = txt;
+  int counter = 1;
+  wchar_t *txt = getText(loc,counter), *ch = txt;
   wchar_t *ptr;
   wstring word;
   StopWords stop_words(loc);
@@ -67,14 +67,38 @@ void Analysis(){
         break;
     }
     ++ch;
+    if(!(*ch)){
+      printf("File number: %d\n",counter);
+      counter++;
+
+      //In here add the Heap sort
+        Initialize(&Heapp);
+
+        FillingHeap(mp,&Heapp);  
+
+        //add print
+        printEnd(&Heapp);
+      if(counter < 3){
+        mp.mp.clear();
+        ch = getText(loc,counter);
+      }else{
+        break;
+      }
+    }
   }
 
-  //In here add the Heap sort
+  /*In here add the Heap sort
   Initialize(&Heapp);
 
   FillingHeap(mp,&Heapp);  
 
   //add print
-  printEnd(&Heapp);
+  printEnd(&Heapp);*/
+
+  //counter++;
+
+  //mp.mp.clear();
+
+  //Analysis(counter);
 
 }

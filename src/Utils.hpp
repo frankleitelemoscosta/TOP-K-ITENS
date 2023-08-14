@@ -7,10 +7,13 @@
 #include<map>
 #include"Hash.hpp"
 #include"Heap.hpp"
+#include <dirent.h>
+
+#define MAXFILES 2;
 
 using namespace std;
 
-wchar_t *getText(const locale &loc);
+wchar_t *getText(const locale &loc,int counter);
 void printStart(std::wofstream &output);
 std::wofstream createOutput(const std::locale &loc);
 void printEnd(Vector *v);
