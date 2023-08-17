@@ -41,7 +41,13 @@ wchar_t *getText(const std::locale &loc,int counter)
 
 void printEnd( Vector *Heapp)
 {
+
+  wstring_convert<codecvt_utf8<wchar_t>> converter;
+  string key;
+
    for(int i = 0 ; i < MAXSIZE ; i++) {
-    wcout << "Chave: " << Heapp->vet[i].value << L" frequência: " << Heapp->vet[i].frequence << endl;
+    key = converter.to_bytes(Heapp->vet[i].value);
+    cout << " Chave: " << key;
+    printf(" frequência: %d\n",Heapp->vet[i].frequence);
    }
 }
