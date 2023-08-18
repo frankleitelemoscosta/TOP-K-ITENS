@@ -1,54 +1,23 @@
 #include "Heap.hpp"
 
-MaxMin::MaxMin() : Small(10000000) , Bigger(0) {}
 
-void Initialize(Vector *v){
+void Initialize(Vector *v)
+{
 	
-	srand(42); 
+	//srand(42); 
     
+	cout << "Here";
+
+
     v->vet = (Itens*)malloc(MAXSIZE*sizeof(Itens));
 
-	for(int i=0; i< MAXSIZE; i++)
+	for(int i = 0; i < MAXSIZE; i++)
 	{
-		v->vet[i].frequence = rand()%100;
+		//v->vet[i].frequence = rand()%100;
 		v->vet[i].value = L"Vazio";
-	}	
-}
-
-void FinishHeap(Vector *v) 
-{
-	int frequence_aux;
-	int i = 0;
-	wstring key_aux;
-	MaxMin Obj;
-
-	frequence_aux = v->vet[0].frequence;
-	key_aux = v->vet[0].value;
-
-	while(v->vet[i].frequence != Obj.Small)
-	{
-		i++;
 	}
+	cout << "Here";
 
-	v->vet[0].frequence = v->vet[i].frequence;
-	v->vet[0].value = v->vet[i].value;
-	v->vet[i].frequence = frequence_aux ;
-	v->vet[i].value = key_aux;
-
-	frequence_aux = v->vet[MAXSIZE - 1].frequence;
-	key_aux = v->vet[MAXSIZE - 1].value;
-
-	i = 0;
-
-	while(v->vet[i].frequence != Obj.Bigger)
-	{
-		i++;
-	}
-
-	v->vet[MAXSIZE - 1].frequence = v->vet[i].frequence;
-	v->vet[MAXSIZE - 1].value = v->vet[i].value;
-	v->vet[i].frequence = frequence_aux ;
-	v->vet[i].value = key_aux;
 
 }
 
@@ -58,62 +27,75 @@ void Swap(Itens *a, Itens *b){
 	*b = aux;
 }
 
-void Heapfy(Vector *v,int i)
-{
-	int last = i;
-	int LC = 2 * i;
-	int RC = (2 * 1) + 1;
-	MaxMin Obj;
+void Imprime(Vector *v){
 
-	if (v->vet[LC].frequence > v->vet[last].frequence)
-	{
-		Swap(&v->vet[last],&v->vet[LC]);
-	}
-	if(v->vet[RC].frequence > v->vet[last].frequence)
-	{
-		Swap(&v->vet[last],&v->vet[RC]);
-	}
-	if(v->vet[last].frequence > Obj.Bigger)
-	{
-		Obj.Bigger = v->vet[last].frequence;
-	}
-	if(v->vet[LC].frequence < Obj.Small)
-	{
-		Obj.Small = v->vet[LC].frequence;
-	}
-	if(v->vet[RC].frequence < Obj.Small)
-	{
-		Obj.Small = v->vet[RC].frequence;
-	}
+	wstring_convert<codecvt_utf8<wchar_t>> converter;
+	string key;
+
+   for(int i = 0 ; i < MAXSIZE ; i++) {
+    key = converter.to_bytes(v->vet[i].value);
+    cout << " Chave: " << key;
+    printf(" frequência: %d\n",v->vet[i].frequence);
+   }
+}
+
+
+void RebuildHeap(Vector *v, int left)
+{
+
+	int i = left;
+	int child = (left > 0)?(i*2):1;
+
+	if((child+1 < MAXSIZE) && (v->vet[child].frequence < v->vet[child+1].frequence))
+		child = child + 1;
+	if (v->vet[i].frequence < v->vet[child].frequence)
+		Swap(&v->vet[i], &v->vet[child]);
 	
 }
 
-void Heap(Vector *v){
+void BuildHeap(Vector *v, int right)
+{
 
-cout << "in Here";
-	for (int i = (MAXSIZE / 2) - 1; i >= 0; i--) 
+	int left = (right/2) ;
+
+	while(left > 0)
 	{
-        Heapfy(v,i);
-    }
-	FinishHeap(v);
+		left = left - 1; 
+		RebuildHeap(v, left);
+	}
 }
 
-void FillingHeap(Map &mp,Vector *v)
+
+void HeapSort(Vector *v){
+	int left = 0;
+	int right = MAXSIZE;
+
+	BuildHeap(v, right);
+	Swap(&v->vet[left], &v->vet[right]);
+	//Imprime(v);
+	
+	
+}
+
+void FillingHeap(Map *mp,Vector *v)
 {
 	int Counter_Aux = 0;
 	bool key = false;
+					cout << "Here";
 
 
-	for(const auto &pair : mp.mp) {
+	for(const auto &pair : mp->mp) {
 		if(Counter_Aux < 20)
 		{
 			v->vet[Counter_Aux].value = pair.first;
 			v->vet[Counter_Aux].frequence = pair.second.appearences;
 			Counter_Aux++;
+
+
 			if(Counter_Aux == 20)
 			{
-				cout << "in Here";
-				Heap(v);
+				cout << "Here";
+				HeapSort(v);
 				key = true;
 			}
 		}
@@ -121,7 +103,7 @@ void FillingHeap(Map &mp,Vector *v)
 			if(v->vet[0].frequence < pair.second.appearences){
 				v->vet[0].frequence = pair.second.appearences;
 				v->vet[0].value = pair.first;
-				Heap(v);
+				HeapSort(v);
 			}
 		}
    }

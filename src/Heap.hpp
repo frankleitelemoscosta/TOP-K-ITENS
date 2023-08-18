@@ -7,8 +7,12 @@
 #include<cstring>
 #include<iostream>
 #include <sstream>
+#include <codecvt>
+#include <fstream>
+#include<locale>
 
-#define MAXSIZE 20
+
+#define MAXSIZE 7
 
 using namespace std;
 
@@ -17,26 +21,25 @@ typedef struct Itens Itens;
 
 
 struct Itens{
+
 	int frequence;
 	wstring value;
 
 };
 
 struct Vector{
+
 	Itens *vet;
+
 };
 
-struct MaxMin{
-	int Bigger;
-	int Small;
-	MaxMin();
-};
+void FillingHeap(Map *mp,Vector *v);
 
-void FillingHeap(Map &mp,Vector *v);
 void Initialize(Vector *v);
-void Heap(Vector *v);
-void Heapfy(Vector *v,int i);
+void Imprime(Vector *v);
 void Swap(Itens *a, Itens *b);
-void FinishHeap(Vector *v);
 
+void RebuildHeap(Vector *v, int left);
+void BuildHeap(Vector *v, int right);
+void HeapSort(Vector *v);
 #endif

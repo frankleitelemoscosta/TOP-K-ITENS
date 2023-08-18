@@ -37,7 +37,7 @@ void Analysis(){
         {
           if(stop_words.isStopWord(word)) 
             {
-                word.clear();
+              word.clear();
             } 
           else 
             {
@@ -87,8 +87,11 @@ void Analysis(){
       //In here add the Heap sort
         Initialize(&Heapp);
 
-        FillingHeap(mp,&Heapp);  
+      	cout << "Here";
 
+
+        FillingHeap(&mp,&Heapp);
+  
         //add print
         printEnd(&Heapp);
       if(counter < 3){
