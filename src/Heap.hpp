@@ -39,7 +39,6 @@ void Initialize(Vector *v);
 void Imprime(Vector *v);
 void Swap(Itens *a, Itens *b);
 
-void RebuildHeap(Vector *v, int left);
 void BuildHeap(Vector *v, int right);
-void HeapSort(Vector *v);
+void Heap(Vector *v);
 #endif

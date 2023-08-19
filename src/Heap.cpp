@@ -1,24 +1,15 @@
 #include "Heap.hpp"
 
-
-void Initialize(Vector *v)
-{
+void Initialize(Vector *v){
 	
-	//srand(42); 
+	srand(42); 
     
-	cout << "Here";
-
-
     v->vet = (Itens*)malloc(MAXSIZE*sizeof(Itens));
-
-	for(int i = 0; i < MAXSIZE; i++)
+	for(int i=0; i<MAXSIZE; i++)
 	{
-		//v->vet[i].frequence = rand()%100;
+		v->vet[i].frequence = rand()%100;
 		v->vet[i].value = L"Vazio";
-	}
-	cout << "Here";
-
-
+	}	
 }
 
 void Swap(Itens *a, Itens *b){
@@ -28,74 +19,67 @@ void Swap(Itens *a, Itens *b){
 }
 
 void Imprime(Vector *v){
-
-	wstring_convert<codecvt_utf8<wchar_t>> converter;
-	string key;
-
-   for(int i = 0 ; i < MAXSIZE ; i++) {
-    key = converter.to_bytes(v->vet[i].value);
-    cout << " Chave: " << key;
-    printf(" frequência: %d\n",v->vet[i].frequence);
-   }
-}
-
-
-void RebuildHeap(Vector *v, int left)
-{
-
-	int i = left;
-	int child = (left > 0)?(i*2):1;
-
-	if((child+1 < MAXSIZE) && (v->vet[child].frequence < v->vet[child+1].frequence))
-		child = child + 1;
-	if (v->vet[i].frequence < v->vet[child].frequence)
-		Swap(&v->vet[i], &v->vet[child]);
+		
+	for(int i=0; i<MAXSIZE; i++){
+		wcout << v->vet[i].value << "\t";	
+		printf("frequence: %d\t \n", v->vet[i].frequence);
+		}
 	
+	printf("\n");
 }
 
-void BuildHeap(Vector *v, int right)
-{
+void BuildHeap(Vector *v, int right){
 
-	int left = (right/2) ;
+	int left = (right/2) - 1;
+	int LC;
+	int RC;
 
-	while(left > 0)
-	{
+	while(left > 0){
+
+		LC = (2 * left);
+		RC = (2 * left) + 1;
+
+		if(v->vet[LC].frequence < v->vet[left].frequence)
+		{
+			Swap(&v->vet[LC],&v->vet[left]);
+		}
+		if(v->vet[RC].frequence < v->vet[left].frequence)
+		{
+			Swap(&v->vet[RC],&v->vet[left]);
+		}
+
 		left = left - 1; 
-		RebuildHeap(v, left);
+
 	}
 }
 
 
-void HeapSort(Vector *v){
-	int left = 0;
+void Heap(Vector *v){
+	int left = 0;//this is the index of the houses the vector into v.
 	int right = MAXSIZE;
 
-	BuildHeap(v, right);
-	Swap(&v->vet[left], &v->vet[right]);
-	//Imprime(v);
-	
+	while(right > 0){
+		right = right - 1;//this is define the walking per tree heap.
+		BuildHeap(v, right);
+		Swap(&v->vet[left], &v->vet[right]);
+	}
 	
 }
 
-void FillingHeap(Map *mp,Vector *v)
+void FillingHeap(Map &mp,Vector *v)
 {
 	int Counter_Aux = 0;
 	bool key = false;
-					cout << "Here";
 
 
-	for(const auto &pair : mp->mp) {
+	for(const auto &pair : mp.mp) {
 		if(Counter_Aux < 20)
 		{
 			v->vet[Counter_Aux].value = pair.first;
 			v->vet[Counter_Aux].frequence = pair.second.appearences;
 			Counter_Aux++;
-
-
-			if(Counter_Aux == 20)
-			{
-				cout << "Here";
-				HeapSort(v);
+			if(Counter_Aux == 20){
+				Heap(v);
 				key = true;
 			}
 		}
@@ -103,7 +87,7 @@ void FillingHeap(Map *mp,Vector *v)
 			if(v->vet[0].frequence < pair.second.appearences){
 				v->vet[0].frequence = pair.second.appearences;
 				v->vet[0].value = pair.first;
-				HeapSort(v);
+				Heap(v);
 			}
 		}
    }
