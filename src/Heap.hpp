@@ -12,7 +12,7 @@
 #include<locale>
 
 
-#define MAXSIZE 7
+#define MAXSIZE 20
 
 using namespace std;
 
@@ -33,7 +33,7 @@ struct Vector{
 
 };
 
-void FillingHeap(Map *mp,Vector *v);
+void FillingHeap(Map &mp,Vector *v);
 
 void Initialize(Vector *v);
 void Imprime(Vector *v);

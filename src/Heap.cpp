@@ -2,12 +2,13 @@
 
 void Initialize(Vector *v){
 	
-	srand(42); 
+	//srand(42); 
     
     v->vet = (Itens*)malloc(MAXSIZE*sizeof(Itens));
-	for(int i=0; i<MAXSIZE; i++)
+
+	for(int i = 0 ; i < MAXSIZE; i++)
 	{
-		v->vet[i].frequence = rand()%100;
+		//v->vet[i].frequence = rand()%100;
 		v->vet[i].value = L"Vazio";
 	}	
 }
@@ -73,7 +74,7 @@ void FillingHeap(Map &mp,Vector *v)
 
 
 	for(const auto &pair : mp.mp) {
-		if(Counter_Aux < 20)
+		if(Counter_Aux <20)
 		{
 			v->vet[Counter_Aux].value = pair.first;
 			v->vet[Counter_Aux].frequence = pair.second.appearences;

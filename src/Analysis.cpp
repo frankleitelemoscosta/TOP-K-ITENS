@@ -6,7 +6,6 @@
 #include"Analysis.hpp"
 #include"Hash.hpp"
 #include"Heap.hpp"
-#include<vector>
 #include<map>
 #include"StopWords.hpp"
 
@@ -80,17 +79,15 @@ void Analysis(){
       break;
     }
     ++ch;
-    if(!(*ch)){
+    if(!(*ch))
+    {
       printf("File number: %d\n",counter);
       counter++;
 
       //In here add the Heap sort
         Initialize(&Heapp);
 
-      	cout << "Here";
-
-
-        FillingHeap(&mp,&Heapp);
+        FillingHeap(mp,&Heapp);
   
         //add print
         printEnd(&Heapp);
