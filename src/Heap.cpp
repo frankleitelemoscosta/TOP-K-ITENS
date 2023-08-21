@@ -2,13 +2,13 @@
 
 void Initialize(Vector *v){
 	
-	//srand(42); 
+	srand(42); 
     
     v->vet = (Itens*)malloc(MAXSIZE*sizeof(Itens));
 
 	for(int i = 0 ; i < MAXSIZE; i++)
 	{
-		//v->vet[i].frequence = rand()%100;
+		v->vet[i].frequence = rand()%100;
 		v->vet[i].value = L"Vazio";
 	}	
 }
@@ -17,16 +17,6 @@ void Swap(Itens *a, Itens *b){
 	Itens aux = *a;
 	*a = *b;
 	*b = aux;
-}
-
-void Imprime(Vector *v){
-		
-	for(int i=0; i<MAXSIZE; i++){
-		wcout << v->vet[i].value << "\t";	
-		printf("frequence: %d\t \n", v->vet[i].frequence);
-		}
-	
-	printf("\n");
 }
 
 void BuildHeap(Vector *v, int right){
@@ -67,7 +57,7 @@ void Heap(Vector *v){
 	
 }
 
-void FillingHeap(Map &mp,Vector *v)
+void FillingHeap(UnoMap &mp,Vector *v)
 {
 	int Counter_Aux = 0;
 	bool key = false;

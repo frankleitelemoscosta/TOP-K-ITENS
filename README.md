@@ -26,7 +26,18 @@ All coments, variables and function names is write in english with the goat of m
 ## FASES DE ESPECIFICAÇÃO, PROJETO E IMPLEMENTAÇÃO
 
 <p style = "text-align = justify">
-Primeiramente para começar a extrair os dados dos varios arquivos de entrada foi utilizado  um contador para contar dentro do loop onde esta ocorrendo o caminhamento letra a letra do arquivo de entrada para que fosse possível concatenar as palavras e formar o nome de cada arquivo, a lógica é converter o inteiro em string e concatenar com o resto do nome que será padrão para a qualquer arquivo que entre no dataset como arquivo de entrada,o padrão de nomeação destes arquivos são: txt01, txt02, e assim sucessivamente, observe que foram definidos apenas dois textos de entrada, para adicionar mais textos a serem processados basta alterar no arquivo Analysis o desvio condicional onde se chama o métod getText dentro do loop while(*ch). Era necessário extrair os dados e coloca-los na memória para serem processados e adicionados a estrutura de dados conhecida como tabela de dispersão ou Hash. Para tal requisito foi utilizado o modo de leitura das linguagens utilizadas neste projeto(C e C++) com a biblioteca fstream e como modo de leitura foi utilizado a função wifstream no modo binário, tal função requer apenas o endereço do arquivo a ser lido e o modo de leitura. assim foi adicionado a uma variavela qual foi denominada de buffer neste projeto, e posteriormente seu valor foi retornado a outra que se encontrava no trecho do código onde ocorreu a análise dos dados do arquivo, cujo nome é Analysis, tal função é chamada na função principal da aplicação, que é o marco de inicio de todos os procedimento para cumprir com o objetivo principal do projeto o de fazer um analisador de recorrência de palavras em um texto.
+Primeiramente para começar a extrair os dados dos vários arquivos de entrada foi utilizado um contador para contar dentro do loop onde esta ocorrendo o caminhamento letra a letra do arquivo de entrada para que fosse possível concatenar as palavras e formar o nome de cada arquivo, a lógica é converter o inteiro em string e concatenar com o resto do nome que será padrão para a qualquer arquivo que entre no dataset como arquivo de entrada,o padrão de nomeação destes arquivos são: txt01, txt02, e assim sucessivamente, observe que foram definidos apenas dois textos de entrada, para adicionar mais textos a serem processados basta alterar no arquivo Analysis o desvio condicional onde se chama o métod getText dentro do loop while(*ch). 
+</p>
+
+<pre>
+if(counter < 3){
+        mp.mp.clear();
+        ch = getText(loc,counter);
+}
+</pre>
+
+<p style = "text-align = justify">
+Era necessário extrair os dados e coloca-los na memória para serem processados e adicionados a estrutura de dados conhecida como tabela de dispersão ou Hash. Para tal requisito foi utilizado o modo de leitura das linguagens utilizadas neste projeto(C e C++) com a biblioteca fstream e como modo de leitura foi utilizado a função wifstream no modo binário, tal função requer apenas o endereço do arquivo a ser lido e o modo de leitura. assim foi adicionado a uma variavela qual foi denominada de buffer neste projeto, e posteriormente seu valor foi retornado a outra que se encontrava no trecho do código onde ocorreu a análise dos dados do arquivo, cujo nome é Analysis, tal função é chamada na função principal da aplicação, que é o marco de inicio de todos os procedimento para cumprir com o objetivo principal do projeto o de fazer um analisador de recorrência de palavras em um texto.
 </p>
 
 <p style = "text-align = justify">
@@ -41,11 +52,21 @@ matação ("arquivo ASCII") onde cada sentença termina por um sinal de pontuaç
 una da esquerda”, ”coluna da direita” e símbolos de pontuação.
 
 <p style = "text-align = justify">
-Assim quando foi identificado que a variavel com os dados do texto de entrada estava em alguma destas situações a palavra já estava em uma outra variável que foi sendo concatenada letra a letra a cada vez que o loop de leitura foi ocorrendo. A motivação do uso da linguagem C++ neste projeto também se faz mais significativa neste momomento da discução visto que a concatenação de uma string na mesma é mais simples que na linguagem C, e a cada vez que isso ocorria foi sendo adicionado a palavra a estrutura e assim foi até o fim do texto, após o término do processamento do texto por completo a tabela de dispersão continha as k palavras mais recorrentes, porem com isso surge outro entrave, como saber em meio a milhares de palavras quais são as mais recorrentes?, a resposta é: basta ordenar os dados em ordem crescente, para tal tarefa foi utilizado a árvore de prioridade ou árvore Heap, a motivação é simples o custo de ordenação com outra estrutura não se compara ao do método Heap sort, que tem o custo computacional O(log(n)).
+Assim quando foi identificado que a variavel com os dados do texto de entrada estava em alguma destas situações a palavra já estava em uma outra variável que foi sendo concatenada letra a letra a cada vez que o loop de leitura foi ocorrendo. A motivação do uso da linguagem C++ neste projeto também se faz mais significativa neste momomento da discução visto que a concatenação de uma string na mesma é mais simples que na linguagem C. 
+</p>
+<p style = "text-align = justify">
+A cada vez que isso ocorria foi sendo adicionado a palavra a estrutura e assim foi até o fim do texto, após o término do processamento do texto por completo a tabela de dispersão continha as k palavras mais recorrentes, porem com isso surge outro entrave, como saber em meio a milhares de palavras quais são as mais recorrentes?, a resposta é: basta usar uma árvore de prioridade heap de tamanho k, fazendo um heap min e percorrendo a hash buscando os valores mais recorrentes, a medida que se percorre a tabela de dispersão do primeiro elemento ao último se compara com o primeiro elemento, que após ter executado o heap min teremos o menor valor no nó raiz. Assim encontrar o elemento que deve sair da árvore foi simples.
 </p>
 
 ## EXEMPLO DE ENTRADA E SAÍDA
 
+Entrada:
+
+<img src="./img/input.png" width = 50% alt="exemplo de input">
+
+Saída:
+
+<img src="./img/PRINT-CODIGO-PRONTO.png" width = 50% alt="output example">
 
 ## INSTRUÇÕES DE COMPILAÇÃO
 
@@ -53,7 +74,7 @@ Assim quando foi identificado que a variavel com os dados do texto de entrada es
 Para obter este projeto em sua máquina basta usar o comando no terminal: git clone "link https no topo do repositóiro", tal link esta no topo da página na tag code como mostra a imagem abaixo:
 </p>
 
-<img src="./img/protocoloHTTP.png" width = 80% alt="onde esta o link">
+<img src="./img/protocoloHTTP.png" width = 80% alt="where is the example">
 
 <p style = "text-align = justify">
 Este projeto contem um arquivo com um conjunto de diretivas de compilação que podem ser executadas em terminal, as quais são:
@@ -131,6 +152,10 @@ Este projeto contem um arquivo com um conjunto de diretivas de compilação que 
             </td>
         </tr>
     </table>
+
+## REFERÊNCIAS
+
+* https://cplusplus.com/reference/map/map/map/
 
 ## AUTOR
 

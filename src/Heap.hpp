@@ -3,8 +3,6 @@
 
 #include<stdbool.h>
 #include"Hash.hpp"
-#include<map>
-#include<cstring>
 #include<iostream>
 #include <sstream>
 #include <codecvt>
@@ -33,12 +31,11 @@ struct Vector{
 
 };
 
-void FillingHeap(Map &mp,Vector *v);
+void FillingHeap(UnoMap &mp,Vector *v);
 
 void Initialize(Vector *v);
-void Imprime(Vector *v);
 void Swap(Itens *a, Itens *b);
-
 void BuildHeap(Vector *v, int right);
 void Heap(Vector *v);
+
 #endif

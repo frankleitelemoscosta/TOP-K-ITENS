@@ -22,7 +22,7 @@ void Analysis(){
   wchar_t *ptr;
   wstring word;
   StopWords stop_words(loc);
-  Map mp;
+  UnoMap mp;
   Vector Heapp;
 
   //main loop
