@@ -1,17 +1,36 @@
 #ifndef __HASH_HPP
 #define __HASH_HPP
 
-#include <string>
-#include <unordered_map>
+#define INITIAL_SIZE 10
 
-struct Data {
-  unsigned short appearences;
-  Data();
+#include<iostream>
+#include<vector>
+
+using namespace std;
+
+struct HashEntry {
+    string key;
+    int frequence;
 };
 
-struct UnoMap {
-  std::unordered_map<std::wstring, Data> mp;
-  void addWord(const std::wstring &word);
+class HashTable {
+public:
+    vector<HashEntry> entries;
+    int size;
+    int count;
+
+
+    HashTable(int initialSize) : size(initialSize), count(0) {
+        entries.resize(initialSize);
+    }
+
+    unsigned int stringHashFunction(const string& str);
+    void resizeHashTable();
+    void insert(const string& key);
+    int search(const string& key);
+    void printHashTable();
+    void clear();
+
 };
 
 #endif

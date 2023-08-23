@@ -41,7 +41,43 @@ Era necessário extrair os dados e coloca-los na memória para serem processados
 </p>
 
 <p style = "text-align = justify">
-Tendo os dados a dispozição para processamento na memoria foi necessário decidir qual estrutura de dados utilizar para armazenar os dados, e alem disso como identificar onde o buffer se encontrava a medida que fosse percorrido letra a letra do arquivo de entrada. Para armazenar as palavras do arquivo de entrada foi utilizado a tabela de dispersão hash que esta disponível no perfil do git hub do professor <a href = "https://github.com/mpiress/HashTable">Michel Pires</a>, pois a mesma usa como indereçamento uma chave o que facilita a pesquisa, cujo custo computacional é O(1), assim a medida que ocorreu a repetição das palavras no texto foi facil localizar tal palavra na estrutura de dados e contar sua frequencia o qual se faz o principal objetivo. Para realizar a identificação de onde o buffer se encontrava foi utilizado as seguintes considerações:
+Tendo os dados a dispozição para processamento na memoria foi necessário decidir qual estrutura de dados utilizar para armazenar os dados, e alem disso como identificar onde o buffer se encontrava a medida que fosse percorrido letra a letra do arquivo de entrada. Para armazenar as palavras do arquivo de entrada foi utilizado a tabela de dispersão hash, pois a mesma usa como indereçamento uma chave o que facilita a pesquisa, cujo custo computacional é O(1), assim a medida que ocorreu a repetição das palavras no texto foi facil localizar tal palavra na estrutura de dados e contar sua frequencia o qual se faz o principal objetivo.
+</p>
+
+<p style = "text-align = justify">
+Imagine se fosse usado em vez da hash uma lista para armazenar as palavras, todas as vezes que uma palavra fosse ser inserida a lista teria de ser percorrida novamente para averiguar se essa palavra já não foi inserida. O que não ocorre na estrutura hash, como a pesquisa tem custo O(1).
+</p>
+
+<p style = "text-align = justify">
+Para realizar o armazenamento de um dado a biblioteca unordered_map recebe um valor e o converte em um inteiro que se torna chave para aquela string ou o tipo que for passado para ser armazenado e se realiza operações bit a bit, alem de outros procedimentos matemáticos. As implementações do std::unordered_map em C++ não usam diretamente nenhum desses métodos específicos de função de hash ("Resto da Divisão", "Meio do Quadrado", "Método da Dobra", "Método da Multiplicação", "Hashing Universal"). Em vez disso, eles usam algoritmos de hash mais complexos e otimizados que são projetados para minimizar colisões e garantir um bom desempenho.
+</p>
+
+<p style = "text-align = justify">
+No que se refere ao tratamento de colisões o unordered_map faz o seguinte: Se uma chave equivalente a k já existir no contêiner, atribui std:: forward < M > ( obj ) ao mapped_type correspondente à tecla k. Se a chave não existir, insere o novo valor como se fosse por insert, construindo-o a partirvalue_type ( k, std:: forward < M > ( obj ) ).
+</p>
+
+<p style = "text-align = justify">
+Quanto ao tamanho do hash quando criado a estrutura se tem acesso diretamente a essa informação apartir da versão do C++11, este tamanho depende das politicas da biblioteca utilizada, no caso do unordered_map esse tamanho é de apenas um compartimento ou bucket, que pode ser comprovado através desse algoritmo:
+</p>
+
+<pre>
+#include< iostream >
+#include< unordered_map >
+
+int main() {
+    std::unordered_map<int, std::string> myMap;
+
+    // Get the number of the buckets
+    size_t numBuckets = myMap.bucket_count();
+
+    std::cout << "Number of buckets: " << numBuckets << std::endl;
+
+    return 0;
+}
+</pre>
+
+<p style = "text-align = justify">
+Para realizar a identificação de onde o buffer se encontrava foi utilizado as seguintes considerações:
 </p>
 
 * Este programa deverá ler uma coleção de arquivos contento textos sem nenhuma for-
@@ -55,7 +91,7 @@ una da esquerda”, ”coluna da direita” e símbolos de pontuação.
 Assim quando foi identificado que a variavel com os dados do texto de entrada estava em alguma destas situações a palavra já estava em uma outra variável que foi sendo concatenada letra a letra a cada vez que o loop de leitura foi ocorrendo. A motivação do uso da linguagem C++ neste projeto também se faz mais significativa neste momomento da discução visto que a concatenação de uma string na mesma é mais simples que na linguagem C. 
 </p>
 <p style = "text-align = justify">
-A cada vez que isso ocorria foi sendo adicionado a palavra a estrutura e assim foi até o fim do texto, após o término do processamento do texto por completo a tabela de dispersão continha as k palavras mais recorrentes, porem com isso surge outro entrave, como saber em meio a milhares de palavras quais são as mais recorrentes?, a resposta é: basta usar uma árvore de prioridade heap de tamanho k, fazendo um heap min e percorrendo a hash buscando os valores mais recorrentes, a medida que se percorre a tabela de dispersão do primeiro elemento ao último se compara com o primeiro elemento, que após ter executado o heap min teremos o menor valor no nó raiz. Assim encontrar o elemento que deve sair da árvore foi simples.
+A cada vez que isso ocorria foi sendo adicionado a palavra a estrutura e assim foi até o fim do texto, após o término do processamento do texto por completo a tabela de dispersão continha as k palavras mais recorrentes, nesse caso k = 20, se desejar conhecer um número distinto de palvras mais recorrentes basta alterar porem com isso surge outro entrave, como saber em meio a milhares de palavras quais são as mais recorrentes?, a resposta é: basta usar uma árvore de prioridade heap de tamanho k, fazendo um heap min e percorrendo a hash buscando os valores mais recorrentes, a medida que se percorre a tabela de dispersão do primeiro elemento ao último se compara com o primeiro elemento, que após ter executado o heap min teremos o menor valor no nó raiz. Assim encontrar o elemento que deve sair da árvore foi simples.
 </p>
 
 ## EXEMPLO DE ENTRADA E SAÍDA

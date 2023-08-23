@@ -6,7 +6,6 @@
 #include"Analysis.hpp"
 #include"Hash.hpp"
 #include"Heap.hpp"
-#include<map>
 #include"StopWords.hpp"
 
 using namespace std;
@@ -19,11 +18,12 @@ void Analysis(){
   //local variables
   int counter = 1;
   wchar_t *txt = getText(loc,counter), *ch = txt;
-  wchar_t *ptr;
-  wstring word;
+  string word;
   StopWords stop_words(loc);
-  UnoMap mp;
   Vector Heapp;
+  wstring utf16String ;
+
+  HashTable hashTable(INITIAL_SIZE);//for alocate space in the memory for hash table
 
   //main loop
   while (*ch) {
@@ -33,49 +33,54 @@ void Analysis(){
       //in case the ch is in the end sentence or a speak or a question.
       case L'.': case L'!': case L'?':
         if(!word.empty()) 
-        {
-          if(stop_words.isStopWord(word)) 
+        {         
+          if(stop_words.isStopWord(utf16String)) 
             {
               word.clear();
             } 
           else 
             {
-              mp.addWord(word);
+              hashTable.insert(word);
             }
         }
         word.clear();
+        utf16String.clear();
         break;
 
       //in case the ch is in the skip of line.
       case L'\n':
-        if(!word.empty()) {
-            if(stop_words.isStopWord(word)) {
+        if(!word.empty()) 
+        {
+            if(stop_words.isStopWord(utf16String)) {
               word.clear();
             } else {
-              mp.addWord(word);
+              hashTable.insert(word);
             }
           }
           word.clear();
+          utf16String.clear();
         break;
 
       //in case the ch is between space, comma, feature, quotation marks, bar, two points
       case L' ': case L',': case L':':
       case L';': case L'(': case L')':
       case L'"': case L'-': case L'/':
-        if(!word.empty()) {
-          if(stop_words.isStopWord(word)) {
+        if(!word.empty()) 
+        {
+          if(stop_words.isStopWord(utf16String)) {
               word.clear();
             } else {
-              mp.addWord(word);
+              hashTable.insert(word);
             }
-
           word.clear();
+          utf16String.clear();
         }
         break;
 
       //if there is no case, the letter will be concatenated with the word that had already been formed with the preceding letters.
       default:
         word += tolower(*ch);
+        utf16String += tolower(*ch);
       break;
     }
     ++ch;
@@ -84,15 +89,17 @@ void Analysis(){
       printf("File number: %d\n",counter);
       counter++;
 
+      //hashTable.printHashTable();
+
       //In here add the Heap sort
         Initialize(&Heapp);
 
-        FillingHeap(mp,&Heapp);
+        FillingHeap(&hashTable,&Heapp);
   
         //add print
         printEnd(&Heapp);
       if(counter < 3){
-        mp.mp.clear();
+        hashTable.clear();
         ch = getText(loc,counter);
       }else{
         break;

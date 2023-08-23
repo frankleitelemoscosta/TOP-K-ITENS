@@ -8,9 +8,10 @@
 #include <codecvt>
 #include <fstream>
 #include<locale>
+#include<string>
 
 
-#define MAXSIZE 20
+#define MAXSIZE 10
 
 using namespace std;
 
@@ -21,7 +22,7 @@ typedef struct Itens Itens;
 struct Itens{
 
 	int frequence;
-	wstring value;
+	std::string value;
 
 };
 
@@ -31,7 +32,7 @@ struct Vector{
 
 };
 
-void FillingHeap(UnoMap &mp,Vector *v);
+void FillingHeap(HashTable *has,Vector *v);
 
 void Initialize(Vector *v);
 void Swap(Itens *a, Itens *b);
