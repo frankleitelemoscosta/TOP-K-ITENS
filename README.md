@@ -6,9 +6,10 @@
 Um exemplo clássico de problema que pode ser solucionado utilizando-se hash e heap é o
 chamado top k itens. Se trata dos k itens mais recorrentes, para tal foi proposto realizar tal 
 tarefa desta forma:
-• Crie uma tabela de dispersão (hash) para contar a frequência de cada elemento tok-
+
+* Crie uma tabela de dispersão (hash) para contar a frequência de cada elemento tok-
 enizado da coleção de dados de entrada.
-• Crie uma árvore de prioridades (heap) de tamanho k e insira os primeiros k elementos do
+* Crie uma árvore de prioridades (heap) de tamanho k e insira os primeiros k elementos do
 hash nela.
 Estes são os desafios para resolução do problema. 
 </p>
@@ -49,8 +50,62 @@ Imagine se fosse usado em vez da hash uma lista para armazenar as palavras, toda
 </p>
 
 <p style = "text-align = justify">
-Para realizar o armazenamento de um dado a biblioteca unordered_map recebe um valor e o converte em um inteiro que se torna chave para aquela string ou o tipo que for passado para ser armazenado e se realiza operações bit a bit, alem de outros procedimentos matemáticos. As implementações do std::unordered_map em C++ não usam diretamente nenhum desses métodos específicos de função de hash ("Resto da Divisão", "Meio do Quadrado", "Método da Dobra", "Método da Multiplicação", "Hashing Universal"). Em vez disso, eles usam algoritmos de hash mais complexos e otimizados que são projetados para minimizar colisões e garantir um bom desempenho.
+Para realizar o armazenamento de um dado a biblioteca unordered_map recebe um valor e o converte em um inteiro que se torna chave para aquela string ou o tipo que for passado para ser armazenado e envia a uma função que realiza operações para gerar uma chave única do tamanho de 32 ou 128 bits, essa função hash se chama MurmurHash, foi criada por Austin Appleby em 2008, ela inicialmente pega valores aleatórios e atribui a algumas variaveis do tipo inteiro, então a função entra em um loop que pega partes de 4 bytes, ou seja, se a chave representar algo maior que 32 bits ele vai repartir essa chave e trabalhar com partes de 32 bits por vez, essa parte retirada da chave vai ser utilizada a cada interação para realizar duas operações de multiplicação e uma operação lógica entre os bits do valor, que nesse caso é a operação de ROL, que se trata de uma operação bit a bit que desloca os bits de um valor para a esquerda e "roda" o bit mais significativo (o bit mais à esquerda) para a posição menos significativa (o bit mais à direita). Basicamente, é como mover os bits para a esquerda e fazer com que o bit que "cai" pela esquerda apareça novamente na direita. </p>
+
+<p style = "text-align = justify">
+O pseudocódigo a seguir mostra a função:
 </p>
+
+<pre>
+algorithm Murmur3_32 is
+    // Note: In this version, all arithmetic is performed with unsigned 32-bit integers.
+    //       In the case of overflow, the result is reduced modulo 232.
+    input: key, len, seed
+
+    c1 ← 0xcc9e2d51
+    c2 ← 0x1b873593
+    r1 ← 15
+    r2 ← 13
+    m ← 5
+    n ← 0xe6546b64
+
+    hash ← seed
+
+    for each fourByteChunk of key do
+        k ← fourByteChunk
+
+        k ← k × c1
+        k ← k ROL r1
+        k ← k × c2
+
+        hash ← hash XOR k
+        hash ← hash ROL r2
+        hash ← (hash × m) + n
+
+    with any remainingBytesInKey do
+        remainingBytes ← SwapToLittleEndian(remainingBytesInKey)
+        // Note: Endian swapping is only necessary on big-endian machines.
+        //       The purpose is to place the meaningful digits towards the low end of the value,
+        //       so that these digits have the greatest potential to affect the low range digits
+        //       in the subsequent multiplication.  Consider that locating the meaningful digits
+        //       in the high range would produce a greater effect upon the high digits of the
+        //       multiplication, and notably, that such high digits are likely to be discarded
+        //       by the modulo arithmetic under overflow.  We don't want that.
+
+        remainingBytes ← remainingBytes × c1
+        remainingBytes ← remainingBytes ROL r1
+        remainingBytes ← remainingBytes × c2
+
+        hash ← hash XOR remainingBytes
+
+    hash ← hash XOR len
+
+    hash ← hash XOR (hash >> 16)
+    hash ← hash × 0x85ebca6b
+    hash ← hash XOR (hash >> 13)
+    hash ← hash × 0xc2b2ae35
+    hash ← hash XOR (hash >> 16)
+</pre>
 
 <p style = "text-align = justify">
 No que se refere ao tratamento de colisões o unordered_map faz o seguinte: Se uma chave equivalente a k já existir no contêiner, atribui std:: forward < M > ( obj ) ao mapped_type correspondente à tecla k. Se a chave não existir, insere o novo valor como se fosse por insert, construindo-o a partirvalue_type ( k, std:: forward < M > ( obj ) ).
@@ -80,12 +135,10 @@ int main() {
 Para realizar a identificação de onde o buffer se encontrava foi utilizado as seguintes considerações:
 </p>
 
-* Este programa deverá ler uma coleção de arquivos contento textos sem nenhuma for-
-matação ("arquivo ASCII") onde cada sentença termina por um sinal de pontuação (".",
+* Este programa deverá ler uma coleção de arquivos contento textos sem nenhuma formatação ("arquivo ASCII") onde cada sentença termina por um sinal de pontuação (".",
 "?", "!"").
 * Cada parágrafo é separado por, pelo menos, uma linha em branco.
-* Considere como palavra uma sequência de letras delimitada por espaço em branco, ”col-
-una da esquerda”, ”coluna da direita” e símbolos de pontuação.
+* Considere como palavra uma sequência de letras delimitada por espaço em branco, ”coluna da esquerda”, ”coluna da direita” e símbolos de pontuação.
 
 <p style = "text-align = justify">
 Assim quando foi identificado que a variavel com os dados do texto de entrada estava em alguma destas situações a palavra já estava em uma outra variável que foi sendo concatenada letra a letra a cada vez que o loop de leitura foi ocorrendo. A motivação do uso da linguagem C++ neste projeto também se faz mais significativa neste momomento da discução visto que a concatenação de uma string na mesma é mais simples que na linguagem C. 
@@ -93,6 +146,12 @@ Assim quando foi identificado que a variavel com os dados do texto de entrada es
 <p style = "text-align = justify">
 A cada vez que isso ocorria foi sendo adicionado a palavra a estrutura e assim foi até o fim do texto, após o término do processamento do texto por completo a tabela de dispersão continha as k palavras mais recorrentes, nesse caso k = 20, se desejar conhecer um número distinto de palvras mais recorrentes basta alterar porem com isso surge outro entrave, como saber em meio a milhares de palavras quais são as mais recorrentes?, a resposta é: basta usar uma árvore de prioridade heap de tamanho k, fazendo um heap min e percorrendo a hash buscando os valores mais recorrentes, a medida que se percorre a tabela de dispersão do primeiro elemento ao último se compara com o primeiro elemento, que após ter executado o heap min teremos o menor valor no nó raiz. Assim encontrar o elemento que deve sair da árvore foi simples.
 </p>
+
+<p style = "text-align = justify">
+O Heap funciona da seguinte forma: inicialmente se reparte o vetor em duas partes e com isso se pega o indice do elemento que esta no meio do vetor, se usa esse elemento para iniciar o procedimento de realização do hepfy, assim elemento por elemento do meio do vetor ao primeiro se analisa as casas que são resultado das expressões 2 * posição atual sendo analisada = filho a esquerda, e 2 * posição atual sendo analisada + 1 = filho direito, se acaso os filhos forem menores que o nó pai se faz a troca, e ao fim da análise tem se na primeira posição ou raiz da árvore o menor elemento. 
+</p>
+
+<img src="./img/miheap.gif" width = 30% alt="min heap example">
 
 ## EXEMPLO DE ENTRADA E SAÍDA
 
@@ -191,10 +250,15 @@ Este projeto contem um arquivo com um conjunto de diretivas de compilação que 
 
 ## REFERÊNCIAS
 
-* https://cplusplus.com/reference/map/map/map/
+WIKPEDIA,Austin Appleby,Disponivel em: https://en.wikipedia.org/wiki/MurmurHash .Acesso em: 30.maio.2023
 
 ## AUTOR
 
 <p style = "text-align = justify">
 Frank Leite Lemos Costa. Aluno de Engenharia da Computação no <a href = "https://www.cefetmg.br/">CEFET</a>, 4° período.
 </p>
+
+#### CONTATO
+
+<p style = "text-align = justify">
+e-mail: frankcefet090@gmail.com
