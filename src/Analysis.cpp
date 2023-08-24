@@ -19,7 +19,6 @@ void Analysis(){
   //local variables
   int counter = 1;
   wchar_t *txt = getText(loc,counter), *ch = txt;
-  wchar_t *ptr;
   wstring word;
   StopWords stop_words(loc);
   Map mp;
