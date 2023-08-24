@@ -2,14 +2,14 @@
 
 void Initialize(Vector *v){
 	
-	srand(42); 
+	//srand(42); 
     
-    v->vet = (Itens*) malloc ( MAXSIZE * sizeof(Itens));
+    v->vet = (Itens*)malloc(MAXSIZE*sizeof(Itens));
 
 	for(int i = 0 ; i < MAXSIZE; i++)
 	{
-		v->vet[i].frequence = rand()%100;
-		v->vet[i].value = "Vazio";
+		//v->vet[i].frequence = rand()%100;
+		v->vet[i].value = L"Vazio";
 	}	
 }
 
@@ -17,6 +17,16 @@ void Swap(Itens *a, Itens *b){
 	Itens aux = *a;
 	*a = *b;
 	*b = aux;
+}
+
+void Imprime(Vector *v){
+		
+	for(int i=0; i<MAXSIZE; i++){
+		wcout << v->vet[i].value << "\t";	
+		printf("frequence: %d\t \n", v->vet[i].frequence);
+		}
+	
+	printf("\n");
 }
 
 void BuildHeap(Vector *v, int right){
@@ -57,27 +67,27 @@ void Heap(Vector *v){
 	
 }
 
-void FillingHeap(HashTable *has,Vector *v)
+void FillingHeap(Map &mp,Vector *v)
 {
 	int Counter_Aux = 0;
 	bool key = false;
 
 
-	for(int i = 0 ; i < has->size; i++) {
-		if(Counter_Aux < 10)
+	for(const auto &pair : mp.mp) {
+		if(Counter_Aux <20)
 		{
-			v->vet[Counter_Aux].value = has->entries[i].key;
-			v->vet[Counter_Aux].frequence = has->entries[i].frequence;
+			v->vet[Counter_Aux].value = pair.first;
+			v->vet[Counter_Aux].frequence = pair.second.appearences;
 			Counter_Aux++;
-			if(Counter_Aux == 10){
+			if(Counter_Aux == 20){
 				Heap(v);
 				key = true;
 			}
 		}
 		else if(key == true){
-			if(v->vet[0].frequence < has->entries[i].frequence){
-				v->vet[0].frequence = has->entries[i].frequence;
-				v->vet[0].value = has->entries[i].key;
+			if(v->vet[0].frequence < pair.second.appearences){
+				v->vet[0].frequence = pair.second.appearences;
+				v->vet[0].value = pair.first;
 				Heap(v);
 			}
 		}

@@ -13,11 +13,12 @@ StopWords::StopWords(const std::locale &loc)
 
   wstring tmp;
 
-  while(getline(txt, tmp)) {
-    this->mp.insert(tmp);
-  }
+    while(getline(txt, tmp))
+    {
 
-  //for(const auto &x : stop_words) wcout << x << endl; // rascunho
+        this->mp.insert(tmp);
+    
+    }
 
   txt.close();
 }

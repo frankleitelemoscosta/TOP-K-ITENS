@@ -3,15 +3,16 @@
 
 #include<stdbool.h>
 #include"Hash.hpp"
+#include<map>
+#include<cstring>
 #include<iostream>
 #include <sstream>
 #include <codecvt>
 #include <fstream>
 #include<locale>
-#include<string>
 
 
-#define MAXSIZE 10
+#define MAXSIZE 20
 
 using namespace std;
 
@@ -22,7 +23,7 @@ typedef struct Itens Itens;
 struct Itens{
 
 	int frequence;
-	std::string value;
+	wstring value;
 
 };
 
@@ -32,11 +33,12 @@ struct Vector{
 
 };
 
-void FillingHeap(HashTable *has,Vector *v);
+void FillingHeap(Map &mp,Vector *v);
 
 void Initialize(Vector *v);
+void Imprime(Vector *v);
 void Swap(Itens *a, Itens *b);
+
 void BuildHeap(Vector *v, int right);
 void Heap(Vector *v);
-
 #endif
