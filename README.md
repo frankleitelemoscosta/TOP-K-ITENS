@@ -248,6 +248,12 @@ Este projeto contem um arquivo com um conjunto de diretivas de compilação que 
         </tr>
     </table>
 
+## CONCLUSÃO
+
+<p style = "text-align = justify">
+Pode-se concluir que o uso da hash para armazenamento de um conjunto de palavras com o objetivo da contagem de frequência dos dados se mostrou uma alternativa muito eficiente, visto que se utilizassemos qualquer outra estrutura o custo de inserção se tornaria inviável,alem de que o custo de inserção em uma hash é O(1), o cenário de uma lista já mostraria o tamanho do problema, imagine ter de percorrer toda a lista todas as vezes que for inserir um dado, a hash acaba com esse problema, pois para inserir um dado a partir da chave se tem diretamente a posição e se essa mesma posição for encontrada duas vezes, vamos ter apenas duas possibilidades, ou teremos um novo elemento, ou temos uma colisão, e as duas situações são facilmente tratadas, como já dito aqui.De uma maneira geral o custo computacional ficou na casa de O(n*log(n)) em seu pior caso,visto que o custo de construção do heapfy tem custo logaritmo e serão inseridos n elementos na estrutura.
+</p>
+
 ## REFERÊNCIAS
 
 WIKPEDIA.Austin Appleby.Disponivel em: https://en.wikipedia.org/wiki/MurmurHash .Acesso em: 30.maio.2023
