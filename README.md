@@ -289,7 +289,6 @@ Este projeto contem um arquivo com um conjunto de diretivas de compilação que 
 
 ## REFERÊNCIAS
 <p style = "text-align = justify">
-
 WIKPEDIA.Austin Appleby.Disponivel em: https://en.wikipedia.org/wiki/MurmurHash .Acesso em: 30.maio.2023
 
 HAROLD.Thomas.Algoritmos Teoria e prática.3ed.Elsevier Editora Ltda.Rio de Janeiro – RJ – Brasil.2012.pag 134 a 148.
