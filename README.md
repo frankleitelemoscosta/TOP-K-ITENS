@@ -254,12 +254,46 @@ Este projeto contem um arquivo com um conjunto de diretivas de compilação que 
 Pode-se concluir que o uso da hash para armazenamento de um conjunto de palavras com o objetivo da contagem de frequência dos dados se mostrou uma alternativa muito eficiente, visto que se utilizassemos qualquer outra estrutura o custo de inserção se tornaria inviável,alem de que o custo de inserção em uma hash é O(1), o cenário de uma lista já mostraria o tamanho do problema, imagine ter de percorrer toda a lista todas as vezes que for inserir um dado, a hash acaba com esse problema, pois para inserir um dado a partir da chave se tem diretamente a posição e se essa mesma posição for encontrada duas vezes, vamos ter apenas duas possibilidades, ou teremos um novo elemento, ou temos uma colisão, e as duas situações são facilmente tratadas, como já dito aqui.De uma maneira geral o custo computacional ficou na casa de O(n*log(n)) em seu pior caso,visto que o custo de construção do heapfy tem custo logaritmo e serão inseridos n elementos na estrutura.
 </p>
 
+## Instruções para compilação e obtenção do projeto
+
+<p style = "text-align = justify">
+Para obter este projeto em sua máquina basta usar o comando no terminal: git clone "link https no topo do repositóiro", tal link esta no topo da página na tag code como mostra a imagem abaixo:
+</p>
+
+
+
+<img src="./img/protocoloHTTP.png" width = 80% alt="onde esta o link">
+
+
+<p style = "text-align = justify">
+Este projeto contem um arquivo com um conjunto de diretivas de compilação que podem ser executadas em terminal, as quais são:
+</p>
+
+<table border="1">
+      <tr><td><u>g++ (nome dos arquivos) -o  (nome do executável)</u></td></tr>
+      <tr><td><u>rm -rf (nome do executável)</u></td></tr>
+      <tr><td><u>./(nome do executável)</u></td></tr>
+</table>
+
+
+<p style = "text-align = justify">
+    <i>As diretrizes de execução deste Make file são:<i>
+    <table border="1">
+      <tr><td><u>make clean</u></td> <td>Apaga a última compilação realizada contida na pasta objects</td></tr>
+      <tr><td><u>make</u></td> <td>Executa a compilação do programa utilizando o g++, e o resultado vai para a pasta objects que esta dentro do repositório build.</td></tr>
+      <tr><td><u>make run</u></td> <td>Executa o programa da pasta objects após o programa já estar compilado </td></tr>
+    </table>
+    <i>Para a execução do programa utilize <u>make</u> para realizar a compilação e logo após utilize <u>make run</u> para executar o programa</i>
+</p>
+
+
 ## REFERÊNCIAS
+<p style = "text-align = justify">
 
 WIKPEDIA.Austin Appleby.Disponivel em: https://en.wikipedia.org/wiki/MurmurHash .Acesso em: 30.maio.2023
 
 HAROLD.Thomas.Algoritmos Teoria e prática.3ed.Elsevier Editora Ltda.Rio de Janeiro – RJ – Brasil.2012.pag 134 a 148.
-
+</p>
 ## AUTOR
 
 <p style = "text-align = justify">
